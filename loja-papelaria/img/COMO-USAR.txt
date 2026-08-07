@@ -1,0 +1,45 @@
+FOTOS DOS PRODUTOS
+==================
+
+Salve aqui as fotos que vão aparecer no site.
+
+1) Nome do arquivo
+   Use nomes simples, sem acento, sem espaço e sem letra maiúscula:
+
+   ok      -> caneta-gel.jpg   caderno-artesanal.jpg   vela-baunilha.png
+   evite   -> Caneta Gel.JPG   vela nº1.jpg            foto (1).jpeg
+
+   Espaço e acento funcionam em alguns servidores e falham em outros;
+   nome simples nunca dá problema.
+
+2) Ligar a foto ao produto
+   Na planilha do Google, na coluna "imagem", escreva SÓ o nome do arquivo:
+
+   caneta-gel.jpg
+
+   O site completa o caminho sozinho (vira img/caneta-gel.jpg).
+   Se preferir uma foto hospedada na internet, cole o link inteiro
+   (comecando com https://) na mesma coluna.
+
+3) Tamanho e formato
+   - Formato: JPG para fotos, PNG quando precisar de fundo transparente.
+   - Tamanho ideal: cerca de 800 x 600 pixels.
+   - Peso: até uns 300 KB por foto. Fotos direto do celular costumam ter
+     4 MB ou mais e deixam a loja lenta no 4G — vale reduzir antes.
+   - O corte que aparece no card é retangular (4 por 3). O centro da foto
+     é o que sempre aparece; deixe o produto centralizado.
+
+4) Depois de colocar as fotos aqui
+   Fotos são arquivos do site, então precisam de um novo deploy na Vercel:
+
+   npx vercel --prod
+
+   (rodando dentro da pasta loja-papelaria)
+
+   Diferente da planilha, que atualiza sozinha, foto nova só aparece
+   depois do deploy.
+
+5) Se a foto não carregar
+   O site não quebra: mostra o emoji do produto no lugar. Confira se o
+   nome na planilha é exatamente igual ao nome do arquivo, inclusive a
+   extensao (.jpg e .jpeg sao diferentes).
