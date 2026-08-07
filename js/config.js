@@ -24,7 +24,7 @@ const CONFIG = {
 
   // Planilha do Google publicada em CSV (Arquivo > Compartilhar > Publicar na
   // web > aba Produtos > CSV). Deixe vazio para usar a lista PRODUTOS daqui.
-  // Só funciona com o site hospedado (Vercel), não abrindo o arquivo direto.
+  // Só funciona com o site hospedado, não abrindo o arquivo direto.
   planilhaCSV: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSduB6JSt8sr0jqmEJHDH4ysDxCBXWcxnw6cVrTuILV2bjpt6b8NVw8WjZkhwETBhPGD5dvNw-71zJ8/pub?output=csv',
 
   // Símbolo/emoji usado quando um produto não tem foto
@@ -37,153 +37,101 @@ const CONFIG = {
    ========================================================================= */
 
 const CATEGORIAS = [
-  'Escrita',
   'Cadernos',
-  'Escolar',
-  'Arte',
-  'Organização',
+  'Chaveiro',
 ];
 
 /* =========================================================================
-   PRODUTOS
-   - id:        precisa ser único (usado no carrinho)
-   - nome:      nome que aparece no card e no pedido
-   - preco:     número, em reais (use ponto, não vírgula: 12.90)
-   - categoria: precisa ser um dos nomes da lista CATEGORIAS acima
-   - descricao: texto curto (opcional)
-   - emoji:     usado quando não há foto (opcional)
-   - imagem:    caminho de uma foto, ex.: 'img/caderno.jpg' (opcional)
-   - esgotado:  true para bloquear a compra sem apagar o produto (opcional)
+   PRODUTOS — LISTA DE RESERVA
+
+   No dia a dia o catálogo vem da planilha do Google. Esta lista só entra em
+   cena se a planilha não responder (fora do ar, link trocado, publicação
+   cancelada). Por isso ela espelha os produtos reais: se algo falhar, o
+   visitante vê a loja de verdade, não produtos de exemplo.
+
+   Não precisa manter esta lista perfeitamente igual à planilha. Vale
+   atualizar de vez em quando, quando o catálogo mudar bastante.
+
+   Repare que aqui não há estoque: se a planilha está fora do ar, não temos
+   como saber a quantidade real, então é melhor não afirmar nada.
    ========================================================================= */
 
 const PRODUTOS = [
   {
-    id: 'can-001',
-    nome: 'Caneta esferográfica azul (caixa c/ 50)',
-    preco: 42.90,
-    categoria: 'Escrita',
-    descricao: 'Ponta 1.0 mm, escrita macia. Caixa fechada.',
-    emoji: '🖊️',
-  },
-  {
-    id: 'can-002',
-    nome: 'Caneta gel colorida — kit c/ 12',
-    preco: 34.50,
-    categoria: 'Escrita',
-    descricao: 'Cores vibrantes, secagem rápida.',
-    emoji: '🖍️',
-  },
-  {
-    id: 'can-003',
-    nome: 'Marca-texto pastel — kit c/ 6',
-    preco: 19.90,
-    categoria: 'Escrita',
-    descricao: 'Tons suaves, ponta chanfrada.',
-    emoji: '🖌️',
-  },
-  {
-    id: 'lap-001',
-    nome: 'Lapiseira 0.7 mm com grip',
-    preco: 12.00,
-    categoria: 'Escrita',
-    descricao: 'Corpo emborrachado, acompanha grafites.',
-    emoji: '✏️',
-  },
-  {
     id: 'cad-001',
-    nome: 'Caderno universitário 10 matérias',
-    preco: 38.90,
+    nome: 'Caderno Inteligente Rosa Coelho',
+    preco: 29.90,
     categoria: 'Cadernos',
-    descricao: '200 folhas, capa dura, espiral reforçado.',
+    imagem: 'caderno_inteligente_rosa_coelho.jpeg',
     emoji: '📓',
   },
   {
     id: 'cad-002',
-    nome: 'Caderno inteligente A5',
-    preco: 79.90,
+    nome: 'Caderno Inteligente Azul Coelho',
+    preco: 29.90,
     categoria: 'Cadernos',
-    descricao: 'Folhas removíveis, capa personalizável.',
+    imagem: 'caderno_inteligente_azul_coelho.jpeg',
     emoji: '📔',
   },
   {
     id: 'cad-003',
-    nome: 'Bloco de anotações pautado A5',
-    preco: 14.50,
+    nome: 'Caderno Inteligente Branco Koala',
+    preco: 29.90,
     categoria: 'Cadernos',
-    descricao: '80 folhas destacáveis.',
-    emoji: '🗒️',
+    imagem: 'caderno_inteligente_branco_koala.jpeg',
+    emoji: '📔',
   },
   {
-    id: 'esc-001',
-    nome: 'Kit escolar completo',
-    preco: 89.90,
-    categoria: 'Escolar',
-    descricao: 'Estojo, lápis, borracha, apontador, régua e cola.',
-    emoji: '🎒',
+    id: 'cad-004',
+    nome: 'Caderno Inteligente Rosa Borboleta',
+    preco: 29.90,
+    categoria: 'Cadernos',
+    imagem: 'caderno_inteligente_rosa_borboleta.jpeg',
+    emoji: '📔',
   },
   {
-    id: 'esc-002',
-    nome: 'Tesoura escolar sem ponta',
-    preco: 9.90,
-    categoria: 'Escolar',
-    descricao: 'Lâmina em aço inox, cabo ergonômico.',
-    emoji: '✂️',
+    id: 'cha-001',
+    nome: 'Chaveiro Bolsinha Amarelo',
+    preco: 20.00,
+    categoria: 'Chaveiro',
+    descricao: 'Mini Chaveiro de Bolsinha',
+    imagem: 'chaveiro_bolsinha_amarelo.jpeg',
+    emoji: '👜',
   },
   {
-    id: 'esc-003',
-    nome: 'Cola branca lavável 90 g',
-    preco: 6.50,
-    categoria: 'Escolar',
-    descricao: 'Não tóxica, secagem transparente.',
-    emoji: '🧴',
+    id: 'cha-002',
+    nome: 'Chaveiro Bolsinha Branco',
+    preco: 20.00,
+    categoria: 'Chaveiro',
+    descricao: 'Mini Chaveiro de Bolsinha',
+    imagem: 'chaveiro_bolsinha_branco.jpeg',
+    emoji: '👜',
   },
   {
-    id: 'art-001',
-    nome: 'Lápis de cor — estojo c/ 36',
-    preco: 64.90,
-    categoria: 'Arte',
-    descricao: 'Pigmentação intensa, mina resistente.',
-    emoji: '🌈',
+    id: 'cha-003',
+    nome: 'Chaveiro Bolsinha Rosa',
+    preco: 20.00,
+    categoria: 'Chaveiro',
+    descricao: 'Mini Chaveiro de Bolsinha',
+    imagem: 'chaveiro_bolsinha_rosa.jpeg',
+    emoji: '👜',
   },
   {
-    id: 'art-002',
-    nome: 'Tinta guache — 6 cores',
-    preco: 22.00,
-    categoria: 'Arte',
-    descricao: 'Potes de 15 ml, lavável.',
-    emoji: '🎨',
+    id: 'cha-004',
+    nome: 'Chaveiro Bolsinha Rosa Escuro',
+    preco: 20.00,
+    categoria: 'Chaveiro',
+    descricao: 'Mini Chaveiro de Bolsinha',
+    imagem: 'chaveiro_bolsinha_rosaescuro.jpeg',
+    emoji: '👜',
   },
   {
-    id: 'art-003',
-    nome: 'Bloco de papel canson A4',
-    preco: 28.90,
-    categoria: 'Arte',
-    descricao: '20 folhas, 140 g/m².',
-    emoji: '📄',
-  },
-  {
-    id: 'org-001',
-    nome: 'Planner permanente 2026',
-    preco: 69.90,
-    categoria: 'Organização',
-    descricao: 'Visão mensal e semanal, adesivos inclusos.',
-    emoji: '📅',
-  },
-  {
-    id: 'org-002',
-    nome: 'Pasta catálogo com 50 plásticos',
-    preco: 32.00,
-    categoria: 'Organização',
-    descricao: 'Capa em polipropileno, tamanho ofício.',
-    emoji: '📁',
-  },
-  {
-    id: 'org-003',
-    nome: 'Kit organizador de mesa',
-    preco: 54.90,
-    categoria: 'Organização',
-    descricao: 'Porta-canetas, porta-clipes e bandeja.',
-    emoji: '🗂️',
-    esgotado: true,
+    id: 'cha-005',
+    nome: 'Chaveiro Bolsinha Azul',
+    preco: 20.00,
+    categoria: 'Chaveiro',
+    descricao: 'Mini Chaveiro de Bolsinha',
+    imagem: 'chaveiro_bolsinha_azul.jpeg',
+    emoji: '👜',
   },
 ];

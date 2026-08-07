@@ -247,6 +247,50 @@
     return li;
   }
 
+  // Enquanto a planilha não responde, mostramos formas cinzas no lugar dos
+  // produtos. Sem isso, o visitante veria o catálogo de reserva do config.js
+  // por um instante e depois ele seria trocado — parece defeito.
+  function renderEsqueleto(quantidade) {
+    el.grade.innerHTML = '';
+    el.semResultado.hidden = true;
+    el.contador.textContent = 'Carregando produtos...';
+
+    for (let i = 0; i < quantidade; i++) {
+      const li = document.createElement('li');
+      li.className = 'card card--esqueleto';
+      li.setAttribute('aria-hidden', 'true');
+
+      const figura = document.createElement('div');
+      figura.className = 'card__figura esqueleto';
+
+      const corpo = document.createElement('div');
+      corpo.className = 'card__corpo';
+      ['38%', '90%', '65%'].forEach((largura) => {
+        const linha = document.createElement('span');
+        linha.className = 'esqueleto esqueleto__linha';
+        linha.style.width = largura;
+        corpo.appendChild(linha);
+      });
+
+      const botao = document.createElement('span');
+      botao.className = 'esqueleto esqueleto__botao';
+      corpo.appendChild(botao);
+
+      li.append(figura, corpo);
+      el.grade.appendChild(li);
+    }
+
+    // Reserva o espaço dos filtros para a tela não pular quando eles chegarem
+    el.filtros.innerHTML = '';
+    ['64px', '80px', '72px'].forEach((largura) => {
+      const chip = document.createElement('span');
+      chip.className = 'chip esqueleto';
+      chip.style.width = largura;
+      chip.setAttribute('aria-hidden', 'true');
+      el.filtros.appendChild(chip);
+    });
+  }
+
   function renderCatalogo() {
     const lista = produtosVisiveis();
 
@@ -511,8 +555,6 @@
   function carregarPlanilha() {
     if (!CONFIG.planilhaCSV || !window.Planilha) return;
 
-    el.contador.textContent = 'Carregando produtos...';
-
     Planilha.carregar(CONFIG.planilhaCSV, CATEGORIAS)
       .then((dados) => {
         catalogo = dados.produtos;
@@ -529,8 +571,9 @@
         renderCarrinho();
       })
       .catch((erro) => {
-        // A loja continua no ar com os produtos do config.js.
+        // A loja continua no ar com os produtos de reserva do config.js.
         console.warn('Não foi possível ler a planilha:', erro.message);
+        montarFiltros();
         renderCatalogo();
       });
   }
@@ -538,8 +581,13 @@
   /* -------------------------------- Início ------------------------------- */
 
   montarIdentidade();
-  montarFiltros();
-  renderCatalogo();
   renderCarrinho();
-  carregarPlanilha();
+
+  if (CONFIG.planilhaCSV && window.Planilha) {
+    renderEsqueleto(6);       // o catálogo real chega em seguida
+    carregarPlanilha();
+  } else {
+    montarFiltros();
+    renderCatalogo();
+  }
 })();
